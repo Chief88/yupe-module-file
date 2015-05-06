@@ -24,13 +24,13 @@ class FileWidget extends yupe\widgets\YWidget
     public function run()
     {
 
-        $file = File::model()->find('code = :code', array(':code' => $this->code));
+        $file = File::model()->find('code = :code', [':code' => $this->code]);
 
         if ( !empty($file) ) {
-            $this->render($this->view, array(
+            $this->render($this->view, [
                 'file' => $file,
                 'params' => $this->params,
-                )
+                ]
             );
         }
 

@@ -121,15 +121,14 @@ class File extends yupe\models\YModel{
         $module = Yii::app()->getModule('file');
 
         return array(
-            'imageUpload' => array(
+            'imageUpload' => [
                 'class'         => 'yupe\components\behaviors\ImageUploadBehavior',
-                'scenarios'     => array('insert', 'update'),
                 'attributeName' => 'image',
                 'minSize'       => $module->minSize,
                 'maxSize'       => $module->maxSize,
                 'types'         => $module->allowedExtensions,
                 'uploadPath'    => $module->uploadPath,
-            ),
+            ],
             'fileUpload' => array(
                 'class'         => 'yupe\components\behaviors\FileUploadBehavior',
                 'scenarios'     => array('insert', 'update'),
@@ -185,4 +184,4 @@ class File extends yupe\models\YModel{
         return Yii::app()->uploadManager->getFileUrl($this->file, Yii::app()->getModule('file')->uploadPath);
     }
 
-} 
+}
