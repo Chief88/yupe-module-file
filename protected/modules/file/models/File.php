@@ -58,11 +58,9 @@ class File extends yupe\models\YModel{
             array('file, name', 'required'),
             array('name, slug', 'filter', 'filter' => 'trim'),
             array('name, slug', 'filter', 'filter' => array($obj = new CHtmlPurifier(), 'purify')),
-            array('name', 'length', 'max'=>50),
             array('sort, category_id', 'numerical', 'integerOnly' => true),
             array('category_id', 'default', 'setOnEmpty' => true, 'value' => null),
-            array('icon', 'length', 'max'=>255),
-            array('slug', 'length', 'max' => 100),
+            array('slug, name, icon', 'length', 'max'=>255),
             array(
                 'slug',
                 'yupe\components\validators\YSLugValidator',
