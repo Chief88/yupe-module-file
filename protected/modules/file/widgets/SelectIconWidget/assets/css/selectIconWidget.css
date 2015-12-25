@@ -1,0 +1,29 @@
+.select-icon{
+    list-style: none;
+    font-size: 25px;
+    text-align: justify;
+    max-height: 105px;
+    overflow: auto;
+    padding: 0px;
+}
+    .select-icon li{
+        display: inline-block;
+    }
+        .select-icon i.active{
+            background: rgb(179, 179, 179);
+            color: #ff0000;
+        }
+        .select-icon .fa{
+            cursor: pointer;
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            -ms-border-radius: 3px;
+            -o-border-radius: 3px;
+            padding: 3px;
+            text-align: center;
+            color: rgb(179, 179, 179);
+        }
+            .select-icon .fa:hover{
+                color: #ff0000;
+            }
