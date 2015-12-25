@@ -2,7 +2,7 @@
 class SelectIconWidget extends CWidget{
 
     public $nameField;
-    public $namesIcons = array(
+    public $namesIcons = [
         'file',
         'file-archive-o',
         'file-audio-o',
@@ -22,7 +22,7 @@ class SelectIconWidget extends CWidget{
         'file-word-o',
         'file-zip-o',
         
-    );
+    ];
 
     public function init(){
         // этот метод будет вызван внутри CBaseController::beginWidget()
@@ -45,10 +45,10 @@ class SelectIconWidget extends CWidget{
             )
         );
 
-        $this->render('//selectIconWidget',array(
+        $this->render('//selectIconWidget', [
             'nameField' => $this->nameField,
             'namesIcons' => $this->namesIcons,
-        ));
+        ]);
 
     }
 }

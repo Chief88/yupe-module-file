@@ -4,13 +4,27 @@ Yii::import('application.modules.file.FileModule');
 
 class FileWidget extends yupe\widgets\YWidget
 {
-    public $code;
+    /**
+     * @var string
+     */
+    public $slug;
+
+    /**
+     * @var string
+     */
     public $view = 'file';
+
+    /**
+     * @var array
+     */
     public $params = [];
 
+    /**
+     * @throws CException
+     */
     public function init()
     {
-        if (empty($this->code)) {
+        if (empty($this->slug)) {
             throw new CException(
                 Yii::t(
                     'FileModule.file',
@@ -21,15 +35,17 @@ class FileWidget extends yupe\widgets\YWidget
 
     }
 
+    /**
+     * @throws CException
+     */
     public function run()
     {
+        $file = File::model()->find('slug = :slug', [':slug' => $this->slug]);
 
-        $file = File::model()->find('code = :code', [':code' => $this->code]);
-
-        if ( !empty($file) ) {
+        if (!empty($file)) {
             $this->render($this->view, [
-                'file' => $file,
-                'params' => $this->params,
+                    'file' => $file,
+                    'params' => $this->params,
                 ]
             );
         }

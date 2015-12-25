@@ -4,17 +4,24 @@ use yupe\components\WebModule;
 
 class FileModule extends WebModule
 {
-    const VERSION = '0.9';
+    const VERSION = '0.9.8';
 
-    public $uploadPath        = 'files';
+    public $uploadPath = 'files';
     public $allowedExtensionsFile = 'pdf,xls,xlsx';
     public $allowedExtensions = 'jpg,jpeg,png,gif';
-    public $minSize           = 0;
-    public $maxSize           = 5368709120;
-    public $maxFiles          = 1;
+    public $minSize = 0;
+    public $maxSize = 5368709120;
+    public $maxFiles = 1;
 
-    public  $aliasModuleT = 'FileModule.file';
-    public  $patchBackend = '/file/fileBackend/';
+    public $aliasModule = 'FileModule.file';
+    public $patchBackend = '/file/fileBackend/';
+
+    public function getDependencies()
+    {
+        return array(
+            'category',
+        );
+    }
 
     public function getUploadPath()
     {
@@ -37,11 +44,11 @@ class FileModule extends WebModule
         $uploadPath = Yii::app()->uploadManager->getBasePath() . DIRECTORY_SEPARATOR . $this->uploadPath;
 
         if (!is_writable($uploadPath))
-            $messages[WebModule::CHECK_ERROR][] =  array(
-                'type'    => WebModule::CHECK_ERROR,
-                'message' => Yii::t($this->aliasModuleT, 'Directory "{dir}" is not accessible for write! {link}', array(
-                    '{dir}'  => $uploadPath,
-                    '{link}' => CHtml::link(Yii::t($this->aliasModuleT, 'Change settings'), array(
+            $messages[WebModule::CHECK_ERROR][] = array(
+                'type' => WebModule::CHECK_ERROR,
+                'message' => Yii::t($this->aliasModule, 'Directory "{dir}" is not accessible for write! {link}', array(
+                    '{dir}' => $uploadPath,
+                    '{link}' => CHtml::link(Yii::t($this->aliasModule, 'Change settings'), array(
                         '/yupe/backend/modulesettings/',
                         'module' => 'File',
                     )),
@@ -54,13 +61,13 @@ class FileModule extends WebModule
     public function getParamsLabels()
     {
         return array(
-            'mainCategory'      => Yii::t($this->aliasModuleT, 'Main social group category'),
-            'adminMenuOrder'    => Yii::t($this->aliasModuleT, 'Menu items order'),
-            'editor'            => Yii::t($this->aliasModuleT, 'Visual Editor'),
-            'uploadPath'        => Yii::t($this->aliasModuleT, 'Uploading files catalog (relatively {path})', array('{path}' => Yii::getPathOfAlias('webroot') . DIRECTORY_SEPARATOR . Yii::app()->getModule("yupe")->uploadPath)),
-            'allowedExtensions' => Yii::t($this->aliasModuleT, 'Accepted extensions (separated by comma)'),
-            'minSize'           => Yii::t($this->aliasModuleT, 'Minimum size (in bytes)'),
-            'maxSize'           => Yii::t($this->aliasModuleT, 'Maximum size (in bytes)'),
+            'mainCategory' => Yii::t($this->aliasModule, 'Main social group category'),
+            'adminMenuOrder' => Yii::t($this->aliasModule, 'Menu items order'),
+            'editor' => Yii::t($this->aliasModule, 'Visual Editor'),
+            'uploadPath' => Yii::t($this->aliasModule, 'Uploading files catalog (relatively {path})', array('{path}' => Yii::getPathOfAlias('webroot') . DIRECTORY_SEPARATOR . Yii::app()->getModule("yupe")->uploadPath)),
+            'allowedExtensions' => Yii::t($this->aliasModule, 'Accepted extensions (separated by comma)'),
+            'minSize' => Yii::t($this->aliasModule, 'Minimum size (in bytes)'),
+            'maxSize' => Yii::t($this->aliasModule, 'Maximum size (in bytes)'),
         );
     }
 
@@ -68,8 +75,8 @@ class FileModule extends WebModule
     {
         return array(
             'adminMenuOrder',
-            'editor'       => Yii::app()->getModule('yupe')->getEditors(),
-            'mainCategory' => CHtml::listData($this->getCategoryList(),'id','name'),
+            'editor' => Yii::app()->getModule('yupe')->getEditors(),
+            'mainCategory' => CHtml::listData($this->getCategoryList(), 'id', 'name'),
             'uploadPath',
             'allowedExtensions',
             'minSize',
@@ -81,7 +88,7 @@ class FileModule extends WebModule
     {
         return array(
             'main' => array(
-                'label' => Yii::t($this->aliasModuleT, 'General module settings'),
+                'label' => Yii::t($this->aliasModule, 'General module settings'),
                 'items' => array(
                     'adminMenuOrder',
                     'editor',
@@ -89,7 +96,7 @@ class FileModule extends WebModule
                 )
             ),
             'images' => array(
-                'label' => Yii::t($this->aliasModuleT, 'Images settings'),
+                'label' => Yii::t($this->aliasModule, 'Images settings'),
                 'items' => array(
                     'uploadPath',
                     'allowedExtensions',
@@ -98,7 +105,7 @@ class FileModule extends WebModule
                 )
             ),
             'list' => array(
-                'label' => Yii::t($this->aliasModuleT, 'File group lists'),
+                'label' => Yii::t($this->aliasModule, 'File group lists'),
             ),
         );
     }
@@ -115,32 +122,32 @@ class FileModule extends WebModule
 
     public function getCategory()
     {
-        return 'Контент';
+        return Yii::t($this->aliasModule, 'Content');
     }
 
     public function getName()
     {
-        return 'Файлы';
+        return Yii::t($this->aliasModule, 'Files');
     }
 
     public function getDescription()
     {
-        return 'Модуль для файлов';
+        return Yii::t($this->aliasModule, 'Module for working with files');
     }
 
     public function getAuthor()
     {
-        return Yii::t($this->aliasModuleT, 'adelfo development');
+        return Yii::t($this->aliasModule, 'Chief88');
     }
 
     public function getAuthorEmail()
     {
-        return Yii::t($this->aliasModuleT, 'serg.latyshkov@gmail.com');
+        return Yii::t($this->aliasModule, 'serg.latyshkov@gmail.com');
     }
 
     public function getUrl()
     {
-        return Yii::t($this->aliasModuleT, 'http://adelfo-studio.ru/');
+        return Yii::t($this->aliasModule, 'https://github.com/Chief88/yupe-module-file');
     }
 
     public function getIcon()
@@ -150,7 +157,7 @@ class FileModule extends WebModule
 
     public function getAdminPageLink()
     {
-        return $this->patchBackend.'index';
+        return $this->patchBackend . 'index';
     }
 
     public function getNavigation()
@@ -158,11 +165,11 @@ class FileModule extends WebModule
         return array(
             array('icon' => 'fa fa-fw fa-list-alt',
                 'label' => 'Файлы список',
-                'url' => array($this->patchBackend.'index')
+                'url' => array($this->patchBackend . 'index')
             ),
             array('icon' => 'fa fa-fw fa-plus-square',
                 'label' => 'Файлы добавить',
-                'url' => array($this->patchBackend.'create')
+                'url' => array($this->patchBackend . 'create')
             ),
         );
     }

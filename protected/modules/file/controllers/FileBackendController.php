@@ -6,7 +6,7 @@ class FileBackendController extends yupe\components\controllers\BackController{
     
     private $_model;
 
-    public  $aliasModuleT = 'FileModule.file';
+    public  $aliasModule = 'FileModule.file';
     public  $patchBackend = '/file/fileBackend/';
 
 	public function actionIndex(){
@@ -53,10 +53,9 @@ class FileBackendController extends yupe\components\controllers\BackController{
 	}
 
     public function actionView($id){
-
         $model = $this->loadModel($id);
 
-        $code = "<?php \$this->widget(\n\t\"application.modules.file.widgets.FileWidget\",\n\tarray(\"code\" => \"{$model->code}\"));\n?>";
+        $code = "<?php \$this->widget(\n\t\"application.modules.file.widgets.FileWidget\",\n\tarray(\"code\" => \"{$model->slug}\"));\n?>";
         $codeCategory          = "<?php \$this->widget(\n\t\"application.modules.file.widgets.FileGroupWidget\",\n\tarray(\"category\" => \"{$model->getCategoryAlias()}\"));\n?>";
 
         $highlighter = new CTextHighlighter();
@@ -106,7 +105,7 @@ class FileBackendController extends yupe\components\controllers\BackController{
 
                 Yii::app()->user->setFlash(
                     yupe\widgets\YFlashMessages::SUCCESS_MESSAGE,
-                    Yii::t($this->aliasModuleT, 'Файл обновлен!')
+                    Yii::t($this->aliasModule, 'Файл обновлен!')
                 );
 
                 $this->redirect(
@@ -151,7 +150,7 @@ class FileBackendController extends yupe\components\controllers\BackController{
 
             Yii::app()->user->setFlash(
                 yupe\widgets\YFlashMessages::SUCCESS_MESSAGE,
-                Yii::t($this->aliasModuleT, 'Файл успешно удален!')
+                Yii::t($this->aliasModule, 'Файл успешно удален!')
             );
 
             // если это AJAX запрос ( кликнули удаление в админском grid view), мы не должны никуда редиректить
@@ -161,7 +160,7 @@ class FileBackendController extends yupe\components\controllers\BackController{
         } else {
             throw new CHttpException(
                 404,
-                Yii::t($this->aliasModuleT, 'Bad request. Please don\'t repeat similar requests anymore!')
+                Yii::t($this->aliasModule, 'Bad request. Please don\'t repeat similar requests anymore!')
             );
         }
     }
@@ -172,7 +171,7 @@ class FileBackendController extends yupe\components\controllers\BackController{
         if (($file = File::model()->findByPk($id)) === null) {
             throw new CHttpException(
                 404,
-                Yii::t($this->aliasModuleT, 'Page was not found!')
+                Yii::t($this->aliasModule, 'Page was not found!')
             );
         }
 
@@ -181,7 +180,7 @@ class FileBackendController extends yupe\components\controllers\BackController{
             $file->save();
             Yii::app()->user->setFlash(
                 yupe\widgets\YFlashMessages::SUCCESS_MESSAGE,
-                Yii::t($this->aliasModuleT, 'Файл удален!')
+                Yii::t($this->aliasModule, 'Файл удален!')
             );
             echo \CJSON::encode(array(
                 'result'=>true,
@@ -189,7 +188,7 @@ class FileBackendController extends yupe\components\controllers\BackController{
         }else{
             Yii::app()->user->setFlash(
                 yupe\widgets\YFlashMessages::ERROR_MESSAGE,
-                Yii::t($this->aliasModuleT, 'Ошибка при удалении файла!')
+                Yii::t($this->aliasModule, 'Ошибка при удалении файла!')
             );
             echo \CJSON::encode(array(
                 'result'=>false,
@@ -213,7 +212,7 @@ class FileBackendController extends yupe\components\controllers\BackController{
             if (($this->_model = File::model()->findByPk($id)) === null) {
                 throw new CHttpException(
                     404,
-                    Yii::t($this->aliasModuleT, 'Page was not found')
+                    Yii::t($this->aliasModule, 'Page was not found')
                 );
             }
         }

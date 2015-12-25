@@ -1,27 +1,35 @@
 <?php
-$this->breadcrumbs = array(
-    Yii::t($this->aliasModuleT, 'Файлы') => array($this->patchBackend.'index'),
-    Yii::t($this->aliasModuleT, 'Добавление'),
-);
+$this->breadcrumbs = [
+    Yii::t($this->aliasModule, 'Files') => [$this->patchBackend.'index'],
+    Yii::t($this->aliasModule, 'Add'),
+];
 
-$this->pageTitle = 'Добавить новый файл';
+$this->pageTitle = 'Add new file';
 
-$this->menu = array(
-    array('icon' => 'list-alt',
-        'label' => Yii::t($this->aliasModuleT, 'Список файлов'),
-        'url' => array($this->patchBackend.'index'),
-    ),
-);
-?>
+$this->menu = [
+    [
+        'label' => Yii::t($this->aliasModule, 'Files'),
+        'items' => [
+            ['icon' => 'list-alt',
+                'label' => Yii::t($this->aliasModule, 'List file'),
+                'url' => [$this->patchBackend.'index']
+            ],
+            ['icon' => 'plus-sign',
+                'label' => Yii::t($this->aliasModule, 'Add file'),
+                'url' => [$this->patchBackend.'create']
+            ],
+        ]
+    ],
+]; ?>
 
 <div class="page-header">
     <h1>
-        <?php echo 'Файлы'; ?>
-        <small><?php echo 'добавление'; ?></small>
+        <?= Yii::t($this->aliasModule, 'Files'); ?>
+        <small><?= Yii::t($this->aliasModule, 'add'); ?></small>
     </h1>
 </div>
 
 <?php
-$this->renderPartial('_form', array(
+$this->renderPartial('_form', [
     'model'=>$model
-));
+]);

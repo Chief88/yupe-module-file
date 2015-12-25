@@ -1,9 +1,9 @@
-<ul class="select-icon">
-    <?php foreach($namesIcons as $nameIcon): ?>
+<ul class="select-icon img-thumbnail">
+    <?php foreach($namesIcons as $nameIcon):{ ?>
         <li>
-            <i class='fa fa-<?php print $nameIcon; ?>'
-               nameIcon="<?php print $nameIcon; ?>"
-               nameFieldForInsert="<?php print $nameField ?>"></i>
+            <i class='fa fa-<?= $nameIcon; ?>'
+               nameIcon="<?= $nameIcon; ?>"
+               nameFieldForInsert="<?= $nameField ?>"></i>
         </li>
-    <?php endforeach; ?>
+    <?php }endforeach; ?>
 </ul>

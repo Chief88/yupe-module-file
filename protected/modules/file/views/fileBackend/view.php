@@ -1,93 +1,107 @@
 <?php
-$this->breadcrumbs = array(
-    Yii::t($this->aliasModuleT, 'Content blocks') => array($this->patchBackend.'index'),
+/**
+ * @var $model File
+ */
+$this->breadcrumbs = [
+    Yii::t($this->aliasModule, 'Files') => [$this->patchBackend.'index'],
     $model->name,
-);
+];
 
-$this->pageTitle = Yii::t($this->aliasModuleT, 'Content blocks - view');
+$this->pageTitle = Yii::t($this->aliasModule, 'File - view');
 
-$this->menu = array(
-    array(
-        'icon'  => 'fa fa-fw fa-list-alt',
-        'label' => Yii::t($this->aliasModuleT, 'List file'),
-        'url'   => array($this->patchBackend.'index')
-    ),
-    array(
-        'icon'  => 'fa fa-fw fa-plus-square',
-        'label' => Yii::t($this->aliasModuleT, 'Add file'),
-        'url'   => array($this->patchBackend.'create')
-    ),
-    array(
-        'label' => Yii::t($this->aliasModuleT, 'File') . ' «' . mb_substr(
-                $model->name,
-                0,
-                32
-            ) . '»'
-    ),
-    array(
-        'icon'  => 'fa fa-fw fa-pencil',
-        'label' => Yii::t($this->aliasModuleT, 'Edit file'),
-        'url'   => array(
-            $this->patchBackend.'update',
-            'id' => $model->id
-        )
-    ),
-    array(
-        'icon'  => 'fa fa-fw fa-eye',
-        'label' => Yii::t($this->aliasModuleT, 'View file'),
-        'url'   => array(
-            $this->patchBackend.'view',
-            'id' => $model->id
-        )
-    ),
-    array(
-        'icon'        => 'fa fa-fw fa-trash-o',
-        'label'       => Yii::t($this->aliasModuleT, 'Remove file'),
-        'url'         => '#',
-        'linkOptions' => array(
-            'submit'  => array($this->patchBackend.'delete', 'id' => $model->id),
-            'params'  => array(Yii::app()->getRequest()->csrfTokenName => Yii::app()->getRequest()->csrfToken),
-            'confirm' => Yii::t($this->aliasModuleT, 'Do you really want to delete content block?'),
-        )
-    ),
-);
+$this->menu = [
+    [
+        'label' => Yii::t($this->aliasModule, 'Files'),
+        'items' => [
+            [
+                'icon'  => 'fa fa-fw fa-list-alt',
+                'label' => Yii::t($this->aliasModule, 'List file'),
+                'url'   => [$this->patchBackend.'index']
+            ],
+            [
+                'icon'  => 'fa fa-fw fa-plus-square',
+                'label' => Yii::t($this->aliasModule, 'Add file'),
+                'url'   => [$this->patchBackend.'create']
+            ],
+            [
+                'label' => Yii::t($this->aliasModule, 'File') . ' «' . mb_substr(
+                        $model->name,
+                        0,
+                        32
+                    ) . '»'
+            ],
+            [
+                'icon'  => 'fa fa-fw fa-pencil',
+                'label' => Yii::t($this->aliasModule, 'Edit file'),
+                'url'   => [
+                    $this->patchBackend.'update',
+                    'id' => $model->id
+                ]
+            ],
+            [
+                'icon'  => 'fa fa-fw fa-eye',
+                'label' => Yii::t($this->aliasModule, 'View file'),
+                'url'   => [
+                    $this->patchBackend.'view',
+                    'id' => $model->id
+                ]
+            ],
+            [
+                'icon'        => 'fa fa-fw fa-trash-o',
+                'label'       => Yii::t($this->aliasModule, 'Remove file'),
+                'url'         => '#',
+                'linkOptions' => [
+                    'submit'  => [$this->patchBackend.'delete', 'id' => $model->id],
+                    'params'  => [Yii::app()->getRequest()->csrfTokenName => Yii::app()->getRequest()->csrfToken],
+                    'confirm' => Yii::t($this->aliasModule, 'Do you want to delete the file?'),
+                ]
+            ],
+        ]
+    ],
+];
 ?>
 <div class="page-header">
     <h1>
-        <?php echo Yii::t($this->aliasModuleT, 'View content block'); ?><br/>
-        <small>&laquo;<?php echo $model->name; ?>&raquo;</small>
+        <?= Yii::t($this->aliasModule, 'Viewing file'); ?><br/>
+        <small>&laquo;<?= $model->name; ?>&raquo;</small>
     </h1>
 </div>
 
 <?php $this->widget(
     'bootstrap.widgets.TbDetailView',
-    array(
+    [
         'data'       => $model,
-        'attributes' => array(
+        'attributes' => [
             'id',
             'name',
-            'image',
-            'icon',
-            array(
+            'slug',
+            [
+                'name'  => 'image',
+                'type'   => 'raw',
+                'value'  => $model->image ? CHtml::image($model->getImageUrl(false, 50), $model->name, ['class' => 'img-thumbnail']) : "---",
+            ],
+            [
+                'name'  => 'icon',
+                'type'   => 'raw',
+                'value'  => $model->icon ? CHtml::openTag('i', ['class' => 'fa fa-lg fa-' . $model->icon]) . CHtml::closeTag('i') : "---",
+            ],
+            [
                 'name'  => 'category_id',
                 'value' => $model->getCategoryName()
-            ),
-        ),
-    )
+            ],
+        ],
+    ]
 ); ?>
 
 <br/>
 <div>
-    <?php echo Yii::t($this->aliasModuleT, 'Shortcode for using this block in template:'); ?>
+    <?= Yii::t($this->aliasModule, 'Code to output this file in the template'); ?>:
     <br/><br/>
-    <div class="code">
-        asd
-    </div>
-    <?php echo $example; ?>
+    <?= $example; ?>
 </div>
 <div>
-    <?php echo Yii::t($this->aliasModuleT, 'Shortcode for using this block group in template:'); ?>
+    <?= Yii::t($this->aliasModule, 'Code to output this file with the group in the template'); ?>:
     <br /><br />
-    <?php echo $exampleCategory; ?>
-    <?php echo Yii::t($this->aliasModuleT, 'Parameter Description:<br><ul><li>category - category code. Required paramert;</li><li>limit - how much of the output. Not obligatory paramert;</li><li>rand - determines how to display units, randomly or not. "true" or "false" (default "false").</li></ul>'); ?>
+    <?= $exampleCategory; ?>
+    <?= Yii::t($this->aliasModule, 'Parameter Description:<br><ul><li>category - category code. Required paramert;</li><li>limit - how much of the output. Not obligatory paramert;</li><li>rand - determines how to display units, randomly or not. "true" or "false" (default "false").</li></ul>'); ?>
 </div>

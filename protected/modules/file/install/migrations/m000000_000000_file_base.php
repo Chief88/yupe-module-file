@@ -17,7 +17,7 @@ class m000000_000000_file_base extends yupe\components\DbMigration
                 'file'          => 'varchar(255) NOT NULL',
                 'image'         => 'varchar(255) DEFAULT NULL',
                 'icon'          => 'varchar(255) NOT NULL',
-                'code'          => 'varchar(100) NOT NULL',
+                'slug'          => 'varchar(100) NOT NULL',
                 'category_id'   => 'integer DEFAULT NULL',
                 'sort'          => "integer NOT NULL DEFAULT '1'"
             ),

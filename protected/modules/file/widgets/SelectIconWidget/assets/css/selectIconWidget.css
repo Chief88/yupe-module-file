@@ -2,8 +2,7 @@
     list-style: none;
     font-size: 25px;
     text-align: justify;
-    width: 165px;
-    height: 100px;
+    max-height: 105px;
     overflow: auto;
     padding: 0px;
 }
@@ -12,12 +11,7 @@
     }
         .select-icon i.active{
             background: rgb(179, 179, 179);
-            color: #3e9eff;
-            text-shadow: 0px 0px 1px #000000;
-            -webkit-text-shadow: 0px 0px 1px #000000;
-            -moz-text-shadow: 0px 0px 1px #000000;
-            -ms-shadow: 0px 0px 1px #000000;
-            -o-shadow: 0px 0px 1px #000000;
+            color: #ff0000;
         }
         .select-icon .fa{
             cursor: pointer;
@@ -31,9 +25,5 @@
             color: rgb(179, 179, 179);
         }
             .select-icon .fa:hover{
-                text-shadow: 0px 0px 1px #000000;
-                -webkit-text-shadow: 0px 0px 1px #000000;
-                -moz-text-shadow: 0px 0px 1px #000000;
-                -ms-shadow: 0px 0px 1px #000000;
-                -o-shadow: 0px 0px 1px #000000;
+                color: #ff0000;
             }

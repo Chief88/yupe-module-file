@@ -1,6 +1,19 @@
 <?php
 
+/**
+ * Class File
+ *
+ * @property string $name
+ * @property string $file
+ * @property string $image
+ * @property string $icon
+ * @property integer $category_id
+ * @property integer $sort
+ * @property string $slug
+ */
 class File extends yupe\models\YModel{
+
+    private $aliasModule = 'FileModule.file';
 
     /**
      * @return string the associated database table name
@@ -26,13 +39,13 @@ class File extends yupe\models\YModel{
     public function attributeLabels()
     {
         return array(
-            'name'          => 'Подпись к файлу',
-            'file'          => 'Загрузить файл',
-            'image'         => 'Загрузить иконку',
-            'icon'          => 'Выбрать иконку',
-            'category_id'   => 'Категория',
-            'sort'          => 'Сортировка',
-            'code'          => 'Code',
+            'name'          => Yii::t($this->aliasModule, 'Signature to the file'),
+            'file'          => Yii::t($this->aliasModule, 'File'),
+            'image'         => Yii::t($this->aliasModule, 'Image'),
+            'icon'          => Yii::t($this->aliasModule, 'Icon'),
+            'category_id'   => Yii::t($this->aliasModule, 'Category'),
+            'sort'          => Yii::t($this->aliasModule, 'Sort'),
+            'slug'          => Yii::t($this->aliasModule, 'Alias'),
         );
     }
 
@@ -43,23 +56,23 @@ class File extends yupe\models\YModel{
     {
         return array(
             array('file, name', 'required'),
-            array('name, code', 'filter', 'filter' => 'trim'),
-            array('name, code', 'filter', 'filter' => array($obj = new CHtmlPurifier(), 'purify')),
+            array('name, slug', 'filter', 'filter' => 'trim'),
+            array('name, slug', 'filter', 'filter' => array($obj = new CHtmlPurifier(), 'purify')),
             array('name', 'length', 'max'=>50),
             array('sort, category_id', 'numerical', 'integerOnly' => true),
             array('category_id', 'default', 'setOnEmpty' => true, 'value' => null),
             array('icon', 'length', 'max'=>255),
-            array('code', 'length', 'max' => 100),
+            array('slug', 'length', 'max' => 100),
             array(
-                'code',
+                'slug',
                 'yupe\components\validators\YSLugValidator',
                 'message' => Yii::t(
                     'FileModule.file',
                     'Unknown field format "{attribute}" only alphas, digits and _, from 2 to 50 characters'
                 )
             ),
-            array('code', 'unique'),
-            array('code, sort, category_id, file, image, name, icon', 'safe'),
+            array('slug', 'unique'),
+            array('slug, sort, category_id, file, image, name, icon', 'safe'),
         );
     }
 
@@ -128,6 +141,15 @@ class File extends yupe\models\YModel{
                 'maxSize'       => $module->maxSize,
                 'types'         => $module->allowedExtensions,
                 'uploadPath'    => $module->uploadPath,
+                'resizeOnUpload' => false,
+                'resizeOptions' => [
+                    'width'   => 9999,
+                    'height'  => 9999,
+                    'quality' => [
+                        'jpegQuality'         => 100,
+                        'pngCompressionLevel' => 9
+                    ],
+                ],
             ],
             'fileUpload' => array(
                 'class'         => 'yupe\components\behaviors\FileUploadBehavior',
@@ -141,7 +163,6 @@ class File extends yupe\models\YModel{
     }
 
     public function sort(array $items){
-
         $transaction = Yii::app()->db->beginTransaction();
 
         try {
@@ -176,7 +197,7 @@ class File extends yupe\models\YModel{
     }
 
     public function getCategoryAlias(){
-        return empty($this->category) ? '<code_category>' : $this->category->alias;
+        return empty($this->category) ? '<code_category>' : $this->category->slug;
     }
 
     public function getUrlFile()
