@@ -4,7 +4,6 @@ Yii::import('application.modules.menu.models.*');
 
 class FileBackendController extends yupe\components\controllers\BackController
 {
-
     private $_model;
 
     public $aliasModule = 'FileModule.file';
